@@ -20,6 +20,14 @@ android {
         sourceCompatibility = '1.7'
         targetCompatibility = '1.7'
     }
+    lintOptions {
+          abortOnError false
+    }
+    aaptOptions{
+	cruncherEnabled = false
+	useNewCruncher = false
+    }
+
 }
 
 dependencies {
