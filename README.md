@@ -12,3 +12,11 @@
 
 --------------------------------------------------------------
 
+ONVIF 默认地址：http://ip:8080/onvif/device_service
+默认用户名：ky_lab
+默认密码：123456
+
+配置文件路径：app\src\main\java\net\majorkernelpanic\onvif\DeviceStaticInfo.java
+
+onvif 调试：app\src\main\java\net\majorkernelpanic\onvif\SimpleONVIFManager.java 修改组播地址，
+如果使用有线网络，需要将文件内wlan0修改为eth0

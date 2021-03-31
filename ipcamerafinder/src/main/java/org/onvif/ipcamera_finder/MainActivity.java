@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * ONVIF组播地址"239.255.255.250"的IPV6版本
      */
-    private static final String WS_DISCOVERTY_ADDRESS = "FF02::1";
+ //   private static final String WS_DISCOVERTY_ADDRESS = "FF02::1";//lvjiong use ipv4
 //    private static final String WS_DISCOVERTY_ADDRESS = "0:0:0:0:0:ffff:efff:fffa";
-//    private static final String WS_DISCOVERTY_ADDRESS = "239.255.255.250";
+    private static final String WS_DISCOVERTY_ADDRESS = "239.255.255.250";
 //    private static final String WS_DISCOVERTY_ADDRESS = "ff00:0:0:0:0:0:efff:fffa";
 
     private MulticastSocket createMulticastSocket(final String groupUrl, final int port) {
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             MulticastSocket multicastSocket = new MulticastSocket(port);
             multicastSocket.setTimeToLive(10);
             multicastSocket.setSoTimeout(10000);
-            multicastSocket.setNetworkInterface(NetworkInterface.getByName("wlan0"));
+            multicastSocket.setNetworkInterface(NetworkInterface.getByName("wlan0"));//lvjiong wlan0
             multicastSocket.joinGroup(groupAddress);
             return multicastSocket;
         } catch (UnknownHostException e) {

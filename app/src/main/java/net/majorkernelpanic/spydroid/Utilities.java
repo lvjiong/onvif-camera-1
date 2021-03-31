@@ -145,14 +145,14 @@ public class Utilities {
      * @return
      */
     public static String generateDeviceProbeMatchPacket(String urnUUID, String requestUUID, String localAddress) {
-        return "<s:Envelope xmlns:a=\"http://www.w3.org/2005/08/addressing\"\n" +
+   /*      return "<s:Envelope xmlns:a=\"http://www.w3.org/2005/08/addressing\"\n" +
                 "    xmlns:d=\"http://docs.oasis-open.org/ws-dd/ns/discovery/2009/01\"\n" +
                 "    xmlns:i=\"http://printer.example.org/2003/imaging\"\n" +
                 "    xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\">\n" +
                 "    <s:Header>\n" +
                 "        <a:Action>http://docs.oasis-open.org/ws-dd/ns/discovery/2009/01/ProbeMatches</a:Action>\n" +
                 "        <a:MessageID>urn:uuid:" + urnUUID + "</a:MessageID>\n" +
-                "        <a:RelatesTo>urn:uuid:" + requestUUID +
+                "        <a:RelatesTo>urn:uuid:" + urnUUID +
                 "        </a:RelatesTo>\n" +
                 "        <a:To>http://www.w3.org/2005/08/addressing/anonymous\n" +
                 "        </a:To>\n" +
@@ -166,7 +166,7 @@ public class Utilities {
                 "                <a:EndpointReference>" +
                 "                    <a:Address>urn:uuid:98190dc2-0890-4ef8-ac9a-5940995e6119</a:Address>\n" +
                 "                </a:EndpointReference>\n" +
-                "                <d:Types>i:PrintBasic i:PrintAdvanced</d:Types>\n" +
+                "                <d:Types>dn:NetworkVideoTransmitter tds:Device</d:Types>\n" +
                 "                <d:Scopes>\n" +
                 "                    ldap:///ou=engineering,o=examplecom,c=us\n" +
                 "                    ldap:///ou=floor1,ou=b42,ou=anytown,o=examplecom,c=us\n" +
@@ -177,7 +177,20 @@ public class Utilities {
                 "            </d:ProbeMatch>\n" +
                 "        </d:ProbeMatches>\n" +
                 "    </s:Body>\n" +
-                "</s:Envelope>";
+                "</s:Envelope>"; */
+			return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" " +
+			"xmlns:enc=\"http://www.w3.org/2003/05/soap-encoding\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
+			"xmlns:wsa=\"http://schemas.xmlsoap.org/ws/2004/08/addressing\" xmlns:wsa5=\"http://www.w3.org/2005/08/addressing\" " +
+			"xmlns:d=\"http://schemas.xmlsoap.org/ws/2005/04/discovery\" xmlns:dn=\"http://www.onvif.org/ver10/network/wsdl\" " +
+			"xmlns:tt=\"http://www.onvif.org/ver10/schema\" xmlns:tds=\"http://www.onvif.org/ver10/device/wsdl\">" +
+			"<s:Header><wsa:MessageID>"+urnUUID+"</wsa:MessageID><wsa:RelatesTo>"+urnUUID+"</wsa:RelatesTo>" +
+			"<wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>" +
+			"<wsa:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/ProbeMatches</wsa:Action></s:Header><s:Body>" +
+			"<d:ProbeMatches><d:ProbeMatch><wsa:EndpointReference><wsa:Address>urn:uuid:1231059b-ff6e-4c04-b35a-99880b7077c7</wsa:Address>" +
+			"</wsa:EndpointReference><d:Types>dn:NetworkVideoTransmitter tds:Device</d:Types><d:Scopes>onvif://www.onvif.org/Profile/Streaming " +
+			"onvif://www.onvif.org/location/country/china onvif://www.onvif.org/type/video_encoder onvif://www.onvif.org/name/Android onvif://www.onvif.org/hardware/DDDDD</d:Scopes>" +
+			"<d:XAddrs>http://10.138.48.55:8080/onvif/device_service</d:XAddrs><d:MetadataVersion>1</d:MetadataVersion></d:ProbeMatch>" +
+			"</d:ProbeMatches></s:Body></s:Envelope>";
     }
 
     @SuppressLint("HardwareIds")

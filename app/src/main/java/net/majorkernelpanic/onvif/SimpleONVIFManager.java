@@ -29,6 +29,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+
 /**
  * 在SpyDroid的基础上实现ONVIF协议
  * <p>
@@ -70,8 +71,8 @@ public class SimpleONVIFManager {
      * 以下的地址是"239.255.255.250"对应的IPV6的格式.
      */
     // TODO: 这里的地址是错误的，但是目前我们只能用这个地址测试，因为下面的IPV6版本的地址有问题(需要换成其他的设备测试一下)
-    private static final String MULTICAST_HOST_IP = "FF02::1";
-//    private static final String MULTICAST_HOST_IP = "239.255.255.250"; // 这是正式的ws-service要求的组播地址，如果希望我们的IPCamera被发现，必须将我们的组播地址设置为该值
+    //private static final String MULTICAST_HOST_IP = "FF02::1";
+    private static final String MULTICAST_HOST_IP = "239.255.255.250"; // 这是正式的ws-service要求的组播地址，如果希望我们的IPCamera被发现，必须将我们的组播地址设置为该值
 //    private static final String MULTICAST_HOST_IP = "0:0:0:0:0:ffff:efff:fffa";
 //    private static final String MULTICAST_HOST_IP = "ff00:0:0:0:0:0:efff:fffa";
 
@@ -82,6 +83,7 @@ public class SimpleONVIFManager {
     private static final int PROBE_PACKET_SEND_OUT_INTERVAL = 500; // 500ms
 
     private WifiManager.MulticastLock multicastLock;
+		
     private MulticastSocket multicastSocket;
 
     private static final boolean DEBUG_SEND_PACKET = false;
@@ -134,7 +136,7 @@ public class SimpleONVIFManager {
             MulticastSocket multicastSocket = new MulticastSocket(MULTICAST_PORT);
             multicastSocket.setTimeToLive(10);
             multicastSocket.setSoTimeout(PACKET_SEND_TIMEOUT);
-            multicastSocket.setNetworkInterface(NetworkInterface.getByName("wlan0"));
+            multicastSocket.setNetworkInterface(NetworkInterface.getByName("wlan0"));//lvjiong wlan0
             multicastSocket.joinGroup(groupAddress);
             return multicastSocket;
         } catch (UnknownHostException e) {
@@ -153,6 +155,7 @@ public class SimpleONVIFManager {
         deviceBackBean.setUserName(DeviceStaticInfo.USER_NAME);
         deviceBackBean.setPsw(DeviceStaticInfo.USER_PSW);
         deviceBackBean.setServiceUrl("http://" + serverIp + ":8080/onvif/device_service");
+		Log.e(TAG,"Onvif service Url:http://"+serverIp+":8080/onvif/device_service");//add by lvjiong
         application.setDeviceBackBean(deviceBackBean);
     }
 
@@ -270,6 +273,9 @@ public class SimpleONVIFManager {
         // 这些请求，然后做出对应的操作,例如返回StreamUri等.
         String sendBack = Utilities.generateDeviceProbeMatchPacket(reqMessageId, requestUUID, serverIp);
         byte[] sendBuf = sendBack.getBytes();
+		
+		Log.d(TAG,"Request reqMessageId:"+reqMessageId+"\nrequestUUID:"+requestUUID+"\nserverIp:"+serverIp);
+		Log.d(TAG,"The sendBack strings is : "+sendBack);
 
         try {
             Log.d(TAG, "the probe packet address are " + probePacket.getAddress() + ":" + probePacket.getPort());

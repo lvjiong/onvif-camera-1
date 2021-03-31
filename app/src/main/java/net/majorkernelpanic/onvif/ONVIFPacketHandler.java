@@ -22,8 +22,8 @@ import javax.xml.parsers.SAXParser;
 public class ONVIFPacketHandler extends DefaultHandler {
     private static final String TAG = "ONVIFPacketHandler";
 
-    private static final String LOCAL_MSG_ID = "a:MessageID";
-    private static final String LOCAL_ACTION = "a:Action";
+    private static final String LOCAL_MSG_ID = "wsa:MessageID";//lvjiong a:  //ONVIF Device Test Tool send wsa:
+    private static final String LOCAL_ACTION = "wsa:Action";//lvjiong a:
 
     private boolean isMsgID = false;
     private boolean isAction = false;
